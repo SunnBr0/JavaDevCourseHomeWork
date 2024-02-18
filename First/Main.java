@@ -6,7 +6,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         myArrayList<Integer> arrTest = new myArrayList<>();
-        
+         
         // добавление элементов
         arrTest.add(3);
         arrTest.add(2);
