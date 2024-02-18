@@ -9,7 +9,7 @@ public class Main {
          
         // добавление элементов
         arrTest.add(3);
-        arrTest.add(2);
+        arrTest.add(1);
         arrTest.add(4);
         arrTest.add(6);
         arrTest.add(9);
