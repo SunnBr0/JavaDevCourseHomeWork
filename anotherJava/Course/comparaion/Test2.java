@@ -2,6 +2,7 @@ package Course.comparaion;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Test2 {
@@ -17,7 +18,7 @@ public class Test2 {
         list_s.add(emp4);
 
         System.out.println("Before s\n " + list_s);
-        Collections.sort(list_s);
+        Collections.sort(list_s, new SalaryComparator());
         System.out.println("Before s\n " + list_s);
     }
 
@@ -48,20 +49,54 @@ class Employee implements Comparable<Employee> {
     @Override
     public int compareTo(Employee o) {
 
-        // if (this.id > o.id) {
-        // return 1;
-        // } else if (this.id < o.id) {
-        // return -1;
-        // } else {
-        // return 0;
-        // }
-        // return this.id - o.id;
-        // return this.id.compareTo(o.id);
-        int res = this.name.compareTo(o.name);
-        if (res == 0) {
-            res = this.surname.compareTo(o.surname);
+        if (this.id > o.id) {
+            return 1;
+        } else if (this.id < o.id) {
+            return -1;
+        } else {
+            return 0;
         }
-        return res;
-    }
+        // // return this.id - o.id;
+        // // return this.id.compareTo(o.id);
+        // // int res = this.name.compareTo(o.name);
+        // // if (res == 0) {
+        // // res = this.surname.compareTo(o.surname);
+        // // }
+        // // return res;
+        // }
 
+    }
+}
+/**
+ * IdComparator
+ */
+// class IdComparator implements Comparator<Employee> {
+
+// @Override
+// public int compare(Employee o1, Employee o2) {
+// if (o1.id > o2.id) {
+// return 1;
+// } else if (o1.id < o2.id) {
+// return -1;
+// } else {
+// return 0;
+// }
+// }
+// }
+
+/**
+ * nameComparator implements
+ */
+class NameComparator implements Comparator<Employee> {
+    @Override
+    public int compare(Employee o1, Employee o2) {
+        return o1.name.compareTo(o2.name);
+    }
+}
+
+class SalaryComparator implements Comparator<Employee> {
+    @Override
+    public int compare(Employee o1, Employee o2) {
+        return o1.salary - o2.salary;
+    }
 }
