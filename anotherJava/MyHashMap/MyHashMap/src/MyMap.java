@@ -1,26 +1,26 @@
-import java.util.Collection;
-import java.util.Set;
+// import java.util.Collection;
+// import java.util.Set;
 
-public interface MyMap<K, V> {
-    int size();
+// public interface MyMap<K, V> {
+// int size();
 
-    boolean containKey(K key);
+// boolean containKey(K key);
 
-    boolean containValue(V value);
+// boolean containValue(V value);
 
-    boolean isEmpty();
+// boolean isEmpty();
 
-    void put(K key, V value);
+// void put(K key, V value);
 
-    V get(K key);
+// V get(K key);
 
-    void remove(K key);
+// void remove(K key);
 
-    void clear();
+// void clear();
 
-    Set<K> keySet();
+// Set<K> keySet();
 
-    Collection<V> values();
+// Collection<V> values();
 
-    Set<MyEntry<K, V>> entrySet();
-}
+// Set<MyEntry<K, V>> entrySet();
+// }

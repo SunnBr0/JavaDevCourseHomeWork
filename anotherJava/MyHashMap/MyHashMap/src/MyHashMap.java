@@ -1,213 +1,211 @@
-import java.util.*;
+// import java.util.*;
 
-/*A hashMap implementation by Vladislav Volkov
- *
- * parameter <K> a type of keys
- * parameter <V> a type of values*/
+// /*A hashMap implementation by Vladislav Volkov
+// *
+// * parameter <K> a type of keys
+// * parameter <V> a type of values*/
 
-public class MyHashMap<K, V> implements MyMap<K, V> {
+// public class MyHashMap<K, V> implements MyMap<K, V> {
 
+// /*Creating of MyHashMap*/
+// private List<LinkedList<MyEntry<K, V>>> buckets;
 
-    /*Creating of MyHashMap*/
-    private List<LinkedList<MyEntry<K, V>>> buckets;
+// /*Initial size*/
+// private int defaultCapacity = 16;
 
-    /*Initial size*/
-    private int defaultCapacity = 16;
+// /*initial load factor*/
+// private final double LOAD_FACTOR = 0.75;
 
-    /*initial load factor*/
-    private final double LOAD_FACTOR = 0.75;
+// /*Count the number of pairs added*/
+// private int size = 0;
 
-    /*Count the number of pairs added*/
-    private int size = 0;
+// /*Constructs a new MyHashMap with default capacity*/
+// public MyHashMap() {
+// buckets = new ArrayList<>(defaultCapacity);
+// for (int i = 0; i < defaultCapacity; i++) {
+// buckets.add(new LinkedList<>());
+// }
+// }
 
-    /*Constructs a new MyHashMap with default capacity*/
-    public MyHashMap() {
-        buckets = new ArrayList<>(defaultCapacity);
-        for (int i = 0; i < defaultCapacity; i++) {
-            buckets.add(new LinkedList<>());
-        }
-    }
+// /* Inserts the value with the key in this map. If the map
+// previously contained the key, the old value is replaced.*/
+// @Override
+// public void put(K key, V value) {
 
+// increaseCapacity();
 
-    /* Inserts the value with the key in this map. If the map
-        previously contained the  key, the old value is replaced.*/
-    @Override
-    public void put(K key, V value) {
+// int bucketIndex = getBucket(key);
 
-        increaseCapacity();
+// LinkedList<MyEntry<K, V>> bucket = buckets.get(bucketIndex);
 
-        int bucketIndex = getBucket(key);
+// for (MyEntry<K, V> entry : bucket) {
+// if (entry.getKey().equals(key)) {
+// entry.setKey(key);
+// return;
+// }
+// }
 
-        LinkedList<MyEntry<K, V>> bucket = buckets.get(bucketIndex);
+// MyEntry<K, V> myEntry = new MyEntry<>(key, value);
+// size++;
+// bucket.add(myEntry);
+// }
 
-        for (MyEntry<K, V> entry : bucket) {
-            if (entry.getKey().equals(key)) {
-                entry.setKey(key);
-                return;
-            }
-        }
+// /*Returns the value to which the key is mapped, or null if this map
+// contains no mapping for the key*/
+// @Override
+// public V get(K key) {
+// int bucketIndex = getBucket(key);
 
-        MyEntry<K, V> myEntry = new MyEntry<>(key, value);
-        size++;
-        bucket.add(myEntry);
-    }
+// LinkedList<MyEntry<K, V>> bucket = buckets.get(bucketIndex);
 
-    /*Returns the value to which the  key is mapped, or null if this map
-    contains no mapping for the key*/
-    @Override
-    public V get(K key) {
-        int bucketIndex = getBucket(key);
+// for (MyEntry<K, V> entry : bucket) {
+// if (key.equals(entry.getKey())) {
+// return entry.getValue();
+// }
+// }
+// return null;
+// }
 
-        LinkedList<MyEntry<K, V>> bucket = buckets.get(bucketIndex);
+// /*Deletes the value to which the key is mapped*/
+// @Override
+// public void remove(K key) {
+// int bucketIndex = getBucket(key);
 
-        for (MyEntry<K, V> entry : bucket) {
-            if (key.equals(entry.getKey())) {
-                return entry.getValue();
-            }
-        }
-        return null;
-    }
+// LinkedList<MyEntry<K, V>> bucket = buckets.get(bucketIndex);
+// Iterator<MyEntry<K, V>> iterator = bucket.iterator();
 
-    /*Deletes the value to which the  key is mapped*/
-    @Override
-    public void remove(K key) {
-        int bucketIndex = getBucket(key);
+// while (iterator.hasNext()) {
+// MyEntry<K, V> entry = iterator.next();
+// if (key.equals(entry.getKey())) {
+// iterator.remove();
+// size--;
+// return;
+// }
+// }
+// }
 
-        LinkedList<MyEntry<K, V>> bucket = buckets.get(bucketIndex);
-        Iterator<MyEntry<K, V>> iterator = bucket.iterator();
+// /*Returns the size value*/
+// @Override
+// public int size() {
+// return size;
+// }
 
-        while (iterator.hasNext()) {
-            MyEntry<K, V> entry = iterator.next();
-            if (key.equals(entry.getKey())) {
-                iterator.remove();
-                size--;
-                return;
-            }
-        }
-    }
+// /*Checks the key content of the map*/
+// @Override
+// public boolean containKey(K key) {
+// int bucketIndex = getBucket(key);
 
-    /*Returns the size value*/
-    @Override
-    public int size() {
-        return size;
-    }
+// LinkedList<MyEntry<K, V>> bucket = buckets.get(bucketIndex);
 
-    /*Checks the key content of the map*/
-    @Override
-    public boolean containKey(K key) {
-        int bucketIndex = getBucket(key);
+// for (MyEntry<K, V> entry : bucket) {
+// if (key.equals(entry.getKey())) {
+// return true;
+// }
+// }
+// return false;
+// }
 
-        LinkedList<MyEntry<K, V>> bucket = buckets.get(bucketIndex);
+// /*Checks the value content of the map*/
+// @Override
+// public boolean containValue(V value) {
+// for (LinkedList<MyEntry<K, V>> bucket : buckets) {
+// for (MyEntry<K, V> entry : bucket) {
+// if (entry.getValue().equals(value)) {
+// return true;
+// }
+// }
+// }
+// return false;
+// }
 
-        for (MyEntry<K, V> entry : bucket) {
-            if (key.equals(entry.getKey())) {
-                return true;
-            }
-        }
-        return false;
-    }
+// /*Checks if map is empty*/
+// @Override
+// public boolean isEmpty() {
+// return size() == 0;
+// }
 
-    /*Checks the value content of the map*/
-    @Override
-    public boolean containValue(V value) {
-        for (LinkedList<MyEntry<K, V>> bucket : buckets) {
-            for (MyEntry<K, V> entry : bucket) {
-                if (entry.getValue().equals(value)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+// /*Deletes all values of map*/
+// @Override
+// public void clear() {
+// buckets.clear();
+// size = 0;
+// }
 
-    /*Checks if map is empty*/
-    @Override
-    public boolean isEmpty() {
-        return size() == 0;
-    }
+// /*Returns set of all map's keys*/
+// @Override
+// public Set<K> keySet() {
+// Set<K> keys = new HashSet<>();
 
-    /*Deletes all values of map*/
-    @Override
-    public void clear() {
-        buckets.clear();
-        size = 0;
-    }
+// for (LinkedList<MyEntry<K, V>> bucket : buckets) {
+// for (MyEntry<K, V> entry : bucket) {
+// keys.add(entry.getKey());
+// }
+// }
 
-    /*Returns set of all map's keys*/
-    @Override
-    public Set<K> keySet() {
-        Set<K> keys = new HashSet<>();
+// return keys;
+// }
 
-        for (LinkedList<MyEntry<K, V>> bucket : buckets) {
-            for (MyEntry<K, V> entry : bucket) {
-                keys.add(entry.getKey());
-            }
-        }
+// /*Returns collection of all map's values*/
+// @Override
+// public Collection<V> values() {
+// Collection<V> values = new ArrayList<>();
 
-        return keys;
-    }
+// for (LinkedList<MyEntry<K, V>> bucket : buckets) {
+// for (MyEntry<K, V> entry : bucket) {
+// values.add(entry.getValue());
+// }
+// }
+// return values;
+// }
 
-    /*Returns collection of all map's values*/
-    @Override
-    public Collection<V> values() {
-        Collection<V> values = new ArrayList<>();
+// /*Returns set of all map's entries*/
+// @Override
+// public Set<MyEntry<K, V>> entrySet() {
+// Set<MyEntry<K, V>> entries = new HashSet<>();
 
-        for (LinkedList<MyEntry<K, V>> bucket : buckets) {
-            for (MyEntry<K, V> entry : bucket) {
-                values.add(entry.getValue());
-            }
-        }
-        return values;
-    }
+// for (LinkedList<MyEntry<K, V>> bucket : buckets) {
+// entries.addAll(bucket);
+// }
 
-    /*Returns set of all map's entries*/
-    @Override
-    public Set<MyEntry<K, V>> entrySet() {
-        Set<MyEntry<K, V>> entries = new HashSet<>();
+// return entries;
+// }
 
-        for (LinkedList<MyEntry<K, V>> bucket : buckets) {
-            entries.addAll(bucket);
-        }
+// /*Gets index of bucket*/
+// private int getBucket(K key) {
+// return Math.abs(key.hashCode() % defaultCapacity);
+// }
 
-        return entries;
-    }
+// /*map extension if load factor is greater than a given value*/
+// public void increaseCapacity() {
+// if ((double) size() / defaultCapacity > LOAD_FACTOR) {
+// int newCapacity = (int) (defaultCapacity * 1.5 + 1);
+// List<LinkedList<MyEntry<K, V>>> newBuckets = new ArrayList<>(newCapacity);
 
-    /*Gets index of bucket*/
-    private int getBucket(K key) {
-        return Math.abs(key.hashCode() % defaultCapacity);
-    }
+// for (int i = 0; i < newCapacity; i++) {
+// newBuckets.add(new LinkedList<>());
+// }
 
-    /*map extension if load factor is greater than a given value*/
-    public void increaseCapacity() {
-        if ((double) size() / defaultCapacity > LOAD_FACTOR) {
-            int newCapacity = (int) (defaultCapacity * 1.5 + 1);
-            List<LinkedList<MyEntry<K, V>>> newBuckets = new ArrayList<>(newCapacity);
+// for (LinkedList<MyEntry<K, V>> bucket : buckets) {
+// for (MyEntry<K, V> entry : bucket) {
+// int newBucketIndex = Math.abs(entry.getKey().hashCode() % defaultCapacity);
+// newBuckets.get(newBucketIndex).add(entry);
+// }
+// }
 
-            for (int i = 0; i < newCapacity; i++) {
-                newBuckets.add(new LinkedList<>());
-            }
+// buckets = newBuckets;
+// defaultCapacity = newCapacity;
+// }
+// }
 
-            for (LinkedList<MyEntry<K, V>> bucket : buckets) {
-                for (MyEntry<K, V> entry : bucket) {
-                    int newBucketIndex = Math.abs(entry.getKey().hashCode() % defaultCapacity);
-                    newBuckets.get(newBucketIndex).add(entry);
-                }
-            }
-
-            buckets = newBuckets;
-            defaultCapacity = newCapacity;
-        }
-    }
-
-    /*Overrides the toString method*/
-    @Override
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (LinkedList<MyEntry<K, V>> bucket : buckets) {
-            for (MyEntry<K, V> entry : bucket) {
-                stringBuilder.append(entry + ", ");
-            }
-        }
-        return stringBuilder.toString();
-    }
-}
+// /*Overrides the toString method*/
+// @Override
+// public String toString() {
+// StringBuilder stringBuilder = new StringBuilder();
+// for (LinkedList<MyEntry<K, V>> bucket : buckets) {
+// for (MyEntry<K, V> entry : bucket) {
+// stringBuilder.append(entry + ", ");
+// }
+// }
+// return stringBuilder.toString();
+// }
+// }
